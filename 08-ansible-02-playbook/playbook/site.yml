@@ -40,11 +40,11 @@
         - name: Create database
           ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
           register: create_db
-          failed_when: create_db.rc != 0 and create_db.rc != 82
+          failed_when: create_db.rc != 0 and create_db.rc != 83
           changed_when: create_db.rc == 0
           retries: 10
           delay: 3
-          until: create_db.rc == 0 or create_db.rc == 82
+          until: create_db.rc == 0 or create_db.rc == 83
       tags: clickhouse
 - name: Install Vector
   hosts: clickhouse
