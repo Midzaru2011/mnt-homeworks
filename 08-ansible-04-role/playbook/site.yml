@@ -1,114 +1,15 @@
 ---
 - name: Install Clickhouse
   hosts: clickhouse
-  handlers:
-    - name: Start clickhouse service
-      ansible.builtin.service:
-        name: clickhouse-server
-        state: restarted
-        enabled: true
-      become: true
-  tasks:
-    - block:
-        - name: Clickhouse download amd64 packages
-          become: true
-          ansible.builtin.get_url:
-            url: "https://packages.clickhouse.com/deb/pool/main/c/{{ item }}/{{ item }}_{{ clickhouse_version }}_amd64.deb"
-            dest: ./{{ item }}_{{ clickhouse_version }}_amd64.deb
-            mode: 0644
-          with_items: "{{ clickhouse_amd64_packages }}"
-        - name: Clickhouse. Install clickhouse-common-static
-          become: true
-          ansible.builtin.apt:
-            deb: ./clickhouse-common-static_{{ clickhouse_version }}_amd64.deb
-          notify: Start clickhouse service
-        - name: Clickhouse. Install clickhouse-client
-          become: true
-          ansible.builtin.apt:
-            deb: "./clickhouse-client_{{ clickhouse_version }}_amd64.deb"
-          notify: Start clickhouse service
-        - name: Clickhouse. Install clickhouse-server
-          become: true
-          ansible.builtin.apt:
-            deb: ./clickhouse-server_{{ clickhouse_version }}_amd64.deb
-          notify: Start clickhouse service
-        - name: Clickhouse. Flush handlers
-          ansible.builtin.meta: flush_handlers
-        - name: Clickhouse. Waiting while clickhouse-server is available...
-          ansible.builtin.pause:
-            seconds: 10
-        - name: Create database
-          ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
-          register: create_db
-          failed_when: create_db.rc != 0 and create_db.rc != 82
-          changed_when: create_db.rc == 0
-          retries: 10
-          delay: 3
-          until: create_db.rc == 0 or create_db.rc == 82
-      tags: clickhouse
+  roles:
+    - clickhouse
+
 - name: Install Vector
   hosts: clickhouse
-  handlers:
-    - name: Restart vector service
-      ansible.builtin.systemd:
-        name: vector
-        state: restarted
-        enabled: true
-      become: true
-  tasks:
-    - block:
-        - name: Install vector packages
-          become: true
-          ansible.builtin.apt:
-            deb: "https://packages.timber.io/vector/{{ vector_version }}/vector_{{ vector_version }}-1_amd64.deb"
-          notify: Restart vector service
-        - name: Template a config to /etc/vector/vector.toml
-          become: true
-          become_user: root
-          ansible.builtin.template:
-            src: templates/vector.toml
-            dest: /etc/vector/vector.toml
-            owner: root
-            group: root
-            mode: "0644"
-          notify:
-            - Restart vector service
-      tags: vector
-- name: Install Nginx
-  hosts: lighthouse
-  handlers:
-    - name: reload-nginx
-      become: true
-      ansible.builtin.command: "nginx -s reload"
-  tasks:
-    - block:
-        - name: Install nginx
-          become: true
-          ansible.builtin.apt:
-            name: nginx
-            state: present
-        - name: Start nginx
-          become: true
-          ansible.builtin.systemd:
-            name: nginx
-            state: started
-            enabled: true
-        - name: Create config for Nginx
-          become: true
-          ansible.builtin.template:
-            src: templates/nginx.conf.j2
-            dest: /etc/nginx/nginx.conf
-            mode: "0644"
-          notify: reload-nginx
-      tags: nginx
+  roles:
+    - vector-role
+
 - name: Install lighthouse
-  handlers:
-    - name: start-nginx
-      become: true
-      ansible.builtin.command: nginx
-    - name: reload-nginx
-      become: true
-      ansible.builtin.command: "nginx -s reload"
   hosts: lighthouse
   pre_tasks:
     - name: Lighthouse | install dependencies
@@ -116,17 +17,5 @@
       ansible.builtin.apt:
         name: git
         state: present
-  tasks:
-    - name: Lighthouse | Copy from git
-      become: true
-      ansible.builtin.git:
-        repo: "{{ lighthouse_repo }}"
-        dest: "{{ lighthouse_dir }}"
-        version: master
-    - name: Lighthouse | Create lighthouse config
-      become: true
-      ansible.builtin.template:
-        src: "templates/lighthouse.conf.j2"
-        dest: /etc/nginx/conf.d/lighthouse.conf
-        mode: "0644"
-      notify: reload-nginx
+  roles:
+    - lighthouse-role

@@ -1,2 +1,2 @@
 ---
-# vars file for clickhouse
+clickhouse_version: "22.3.10.22"
