@@ -1,2 +1,5 @@
 ---
-clickhouse_version: "22.3.10.22"
+clickhouse_amd64_packages:
+  - clickhouse-client
+  - clickhouse-server
+  - clickhouse-common-static
