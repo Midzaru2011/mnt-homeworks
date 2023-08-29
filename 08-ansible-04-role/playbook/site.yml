@@ -7,7 +7,7 @@
 - name: Install Vector
   hosts: clickhouse
   roles:
-    - vector-role
+    - vector
 
 - name: Install lighthouse
   hosts: lighthouse
@@ -18,4 +18,4 @@
         name: git
         state: present
   roles:
-    - lighthouse-role
+    - lighthouse
