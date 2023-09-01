@@ -3,14 +3,12 @@
   hosts: clickhouse
   roles:
     - clickhouse
-
 - name: Install Vector
   hosts: clickhouse
   roles:
     - vector
-
 - name: Install lighthouse
-  hosts: lighthouse
+  hosts: lighthouse-01
   pre_tasks:
     - name: Lighthouse | install dependencies
       become: true

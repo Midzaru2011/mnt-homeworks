@@ -2,7 +2,7 @@
 clickhouse:
   hosts:
     clickhouse-01:
-      ansible_host: 
+      ansible_host: 51.250.69.189
       ansible_connection: ssh
       ansible_user: zag1988
       ansible_python_interpreter: python3
@@ -10,7 +10,7 @@ clickhouse:
 vector:
   hosts:
     vector-01:
-      ansible_host: 
+      ansible_host: 84.201.156.91
       nsible_connection: ssh
       ansible_user: zag1988
       ansible_python_interpreter: python3
@@ -18,7 +18,7 @@ vector:
 lighthouse:
   hosts:
     lighthouse-01: 
-      ansible_host: 
+      ansible_host: 51.250.79.77
       nsible_connection: ssh
       ansible_user: zag1988
       ansible_python_interpreter: python3

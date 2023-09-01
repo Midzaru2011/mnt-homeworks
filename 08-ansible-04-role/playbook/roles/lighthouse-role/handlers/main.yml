@@ -1,7 +1,0 @@
----
-- name: reload-nginx
-  become: true
-  ansible.builtin.command: "nginx -s reload"
-- name: start-nginx
-  become: true
-  ansible.builtin.command: nginx
