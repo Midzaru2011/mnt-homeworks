@@ -1145,7 +1145,7 @@ zag1988@mytest4:~/mnt-homeworks/08-ansible-05-testing/roles/vector-role$
 
 6. Добавьте новый тег на коммит с рабочим сценарием в соответствии с семантическим версионированием.
     
-    [vector role](https://github.com/Midzaru2011/vector-role/releases/tag/1.0.2)
+    [vector role](https://github.com/Midzaru2011/vector-role/tree/1.0.2)
 ### Tox
 
 1. Добавьте в директорию с vector-role файлы из [директории](./example).
@@ -1555,7 +1555,7 @@ _______________________________________________________________ summary ________
 
 9. Добавьте новый тег на коммит с рабочим сценарием в соответствии с семантическим версионированием.
 
-[vector role](https://github.com/Midzaru2011/vector-role/releases/tag/1.0.2)
+[vector role](https://github.com/Midzaru2011/vector-role/tree/1.0.2)
 
 После выполнения у вас должно получится два сценария molecule и один tox.ini файл в репозитории. Не забудьте указать в ответе теги решений Tox и Molecule заданий. В качестве решения пришлите ссылку на  ваш репозиторий и скриншоты этапов выполнения задания. 
 
