@@ -18,30 +18,28 @@
       package:
         name: "{{ java_packages }}"
         state: present
-
+    - name: Install ACL
+      become: true
+      ansible.builtin.apt:
+          name: acl
+          state: present
 - name: Get Jenkins master installed
   hosts: jenkins_masters
   tasks:
-    - name: Get repo Jenkins
-      become: true
-      get_url:
-        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
-        dest: /etc/yum.repos.d/jenkins.repo
-        validate_certs: false
     - name: Add Jenkins key
       become: true
-      rpm_key:
-        key: https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+      ansible.builtin.apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
         state: present
-        validate_certs: false
-    - name: Install epel-release
+    - name: Add jenkins repo list file into sources.list.d
       become: true
-      yum:
-        name: epel-release
+      ansible.builtin.apt_repository:
+        repo: "deb https://pkg.jenkins.io/debian-stable binary/"
         state: present
+        update_cache: true
     - name: Install Jenkins and requirements
       become: true
-      yum:
+      ansible.builtin.apt:
         name:
           - jenkins
           - git
@@ -80,43 +78,45 @@
         state: directory
         owner: "{{ jenkins_user_name }}"
         group: "{{ jenkins_user_group }}"
-    - name: Add docker repo
+    - name: Install aptitude
       become_user: root
-      get_url:
-        url: https://download.docker.com/linux/centos/docker-ce.repo
-        dest: /etc/yum.repos.d/docker-ce.repo
-        validate_certs: false
-    - name: Install some required
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+    - name: Install required system packages
       become_user: root
-      yum:
-        name:
-          - git
-          - python3
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
+      apt:
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+          - python3-pip
+          - virtualenv
+          - python3-setuptools
+        state: latest
+        update_cache: true
+    - name: Add Docker GPG apt Key
+      become_user: root
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-    - name: Update pip
+    - name: Add Docker Repository
       become_user: root
-      pip:
-        executable: pip3
-        name: pip
-        extra_args: --upgrade
-    - name: Install Ansible
-      become_user: root
-      pip:
-        executable: pip3
-        name:
-          - selinux
-          - ansible<3.0
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
-    - name: Reinstall Selinux
+    - name: Update apt and install docker-ce
+      become_user: root
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+    - name: Install Docker Module for Python
       become_user: root
       pip:
-        executable: pip3
-        name:
-          - selinux
-        state: forcereinstall
+        name: docker
     - name: Add local to PATH
       lineinfile:
         dest: ~/.bashrc
@@ -144,6 +144,5 @@
         dest: "{{ jenkins_agent_dir }}"
       register: install_agent
       until: install_agent is succeeded
-      retries: 10
-      timeout: 10
-
+      retries: 20
+      timeout: 30

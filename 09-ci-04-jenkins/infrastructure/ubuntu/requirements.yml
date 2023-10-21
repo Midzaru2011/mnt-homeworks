@@ -1,0 +1,5 @@
+---
+  - src: https://github.com/geerlingguy/ansible-role-jenkins.git
+    scm: git
+    version: "5.0.1"
+    name: jenkins
