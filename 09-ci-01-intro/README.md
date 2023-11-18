@@ -28,3 +28,4 @@
 
 
 ![image](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/421abfc3-7c87-4cd7-aeb3-461436fe7ead)
+![image](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/02cfa765-b147-4077-befa-b59ccf48953d)
