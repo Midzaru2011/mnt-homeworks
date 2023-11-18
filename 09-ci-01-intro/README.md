@@ -8,11 +8,23 @@
 
 ## Основная часть
 
-К сожалению, выполнить ДЗ не могу из-за блокировки ресурса!
+Необходимо создать собственные workflow для двух типов задач: bug и остальные типы задач. Задачи типа bug должны проходить жизненный цикл:
 
-<details>
-<summary> Блокировка </summary>
+1. Open -> On reproduce.
+2. On reproduce -> Open, Done reproduce.
+3. Done reproduce -> On fix.
+4. On fix -> On reproduce, Done fix.
+5. Done fix -> On test.
+6. On test -> On fix, Done.
+7. Done -> Closed, Open.
 
-![Alt text](IMG/JIRA.PNG)
+Остальные задачи должны проходить по упрощённому workflow:
 
-</details>
+1. Open -> On develop.
+2. On develop -> Open, Done develop.
+3. Done develop -> On test.
+4. On test -> On develop, Done.
+5. Done -> Closed, Open.
+
+
+![image](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/421abfc3-7c87-4cd7-aeb3-461436fe7ead)
