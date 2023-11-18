@@ -42,5 +42,5 @@
 
 6. Если всё отработалось в рамках ожидания — выгрузите схемы workflow для импорта в XML. Файлы с workflow и скриншоты workflow приложите к решению задания.
 
-  [bug workflow.xml] (https://github.com/Midzaru2011/mnt-homeworks/blob/main/09-ci-01-intro/all%20task%20workflow%20(1))
+  [bug workflow.xml](https://github.com/Midzaru2011/mnt-homeworks/blob/main/09-ci-01-intro/all%20task%20workflow%20(1))
 
