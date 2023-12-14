@@ -26,6 +26,9 @@
 1. Подключите поднятый вами prometheus, как источник данных.
 1. Решение домашнего задания — скриншот веб-интерфейса grafana со списком подключенных Datasource.
 
+![grafana](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/9fbaa996-91fe-4920-88e7-9f00460a9551)
+
+
 ## Задание 2
 
 Изучите самостоятельно ресурсы:
@@ -37,16 +40,39 @@
 Создайте Dashboard и в ней создайте Panels:
 
 - утилизация CPU для nodeexporter (в процентах, 100-idle);
+```
+(avg by (instance) (rate(node_cpu_seconds_total{mode="idle",job="node"}[1m])))
+```
 - CPULA 1/5/15;
+```
+node_load1{instance="node-exporter:9100"}
+node_load5{instance="node-exporter:9100"}
+node_load15{instance="node-exporter:9100"}
+```
 - количество свободной оперативной памяти;
+
+```
+node_memory_MemTotal_bytes{instance="node-exporter:9100",job="node"}
+```
 - количество места на файловой системе.
+```
+node_filesystem_size_bytes{instance="node-exporter:9100",job="node",device="/dev/vda2"} - node_filesystem_avail_bytes{instance="node-exporter:9100",job="node",device="/dev/vda2"}
+```
 
 Для решения этого задания приведите promql-запросы для выдачи этих метрик, а также скриншот получившейся Dashboard.
+
+![Dashboard](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/56513c1f-1532-4a32-a428-58b7b35313af)
+
 
 ## Задание 3
 
 1. Создайте для каждой Dashboard подходящее правило alert — можно обратиться к первой лекции в блоке «Мониторинг».
 1. В качестве решения задания приведите скриншот вашей итоговой Dashboard.
+
+![Alert1](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/9a859ac4-605a-4916-840d-408e9186ee67)
+![Alert](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/dd37fd7b-0d53-42be-9cef-3ffd1991f208)
+
+
 
 ## Задание 4
 
