@@ -79,7 +79,10 @@ node_filesystem_size_bytes{instance="node-exporter:9100",job="node",device="/dev
 1. Сохраните ваш Dashboard.Для этого перейдите в настройки Dashboard, выберите в боковом меню «JSON MODEL». Далее скопируйте отображаемое json-содержимое в отдельный файл и сохраните его.
 1. В качестве решения задания приведите листинг этого файла.
 
-```
+<details>
+  <summary>JSON MODEL</summary>
+  
+```shell
 {
   "annotations": {
     "list": [
@@ -680,6 +683,7 @@ node_filesystem_size_bytes{instance="node-exporter:9100",job="node",device="/dev
 }
 ```
 
+</details>
 
 ---
 
