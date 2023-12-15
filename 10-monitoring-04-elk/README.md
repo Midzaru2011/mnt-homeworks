@@ -40,15 +40,20 @@ Filebeat следует сконфигурировать для отправки
 Результатом выполнения задания должны быть:
 
 - скриншот `docker ps` через 5 минут после старта всех контейнеров (их должно быть 5);
+![Docker ps](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/d5c5be78-9114-4a32-80c9-310ede3fd4cb)
+
 - скриншот интерфейса kibana;
+![Kibana](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/061d0619-54b2-4d60-a290-e23fd42599e3)
 - docker-compose манифест (если вы не использовали директорию help);
 - ваши yml-конфигурации для стека (если вы не использовали директорию help).
 
 ## Задание 2
 
 Перейдите в меню [создания index-patterns  в kibana](http://localhost:5601/app/management/kibana/indexPatterns/create) и создайте несколько index-patterns из имеющихся.
+![DataView](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/0d560b29-4f50-477f-add4-246951661acb)
 
 Перейдите в меню просмотра логов в kibana (Discover) и самостоятельно изучите, как отображаются логи и как производить поиск по логам.
+![Discover](https://github.com/Midzaru2011/mnt-homeworks/assets/102572340/4e5a67c5-22e5-4055-aa7a-7454e4a74a30)
 
 В манифесте директории help также приведенно dummy-приложение, которое генерирует рандомные события в stdout-контейнера.
 Эти логи должны порождать индекс logstash-* в elasticsearch. Если этого индекса нет — воспользуйтесь советами и источниками из раздела «Дополнительные ссылки» этого задания.
